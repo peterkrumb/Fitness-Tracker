@@ -4,7 +4,6 @@ const mongoose = require("mongoose");
 
 const PORT = 3000;
 
-require("./models/Workout");
 const app = express();
 
 app.use(logger("dev"));
@@ -16,15 +15,10 @@ app.use(express.static("public"));
 
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/userdb", { useNewUrlParser: true });
 
-// app.post("/submit", ({ body }, res) => {
-//   User.create(body)
-//     .then(dbUser => {
-//       res.json(dbUser);
-//     })
-//     .catch(err => {
-//       res.json(err);
-//     });
-// });
+
+require("./routes/api")(app);
+require("./routes/htmlroutes")(app);
+
 
 app.listen(PORT, () => {
     console.log(`App running on port ${PORT}!`);
